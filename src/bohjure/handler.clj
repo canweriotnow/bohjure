@@ -13,16 +13,12 @@
   (route/resources "/")
   (route/not-found "Not Found"))
 
-(defn destroy [] (timbre/info "picture-gallery is shutting down"))
-
 (defn init
   "init will be called once when
    app is deployed as a servlet on
    an app server such as Tomcat
    put any initialization code here"
   []
-  (if-not (schema/actualized?)
-    (schema/actualize))
   (timbre/set-config!
     [:appenders :rotor]
     {:min-level :info,

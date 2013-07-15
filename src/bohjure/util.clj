@@ -21,4 +21,3 @@
     (io/slurp-resource filename)
     (md/md-to-html-string)))
 
-

@@ -1,8 +1,6 @@
 (ns bohjure.models.schema
-  (:use [lobos.core :only (defcommand migrate)])
   (:require [clojure.java.jdbc :as sql]
-            [noir.io :as io]
-            [lobos.migration :as lm]))
+            [noir.io :as io]))
 
 (def db-store "site.db")
 
@@ -18,15 +16,48 @@
   []
   (.exists (new java.io.File (str (io/resource-path) db-store ".h2.db"))))
 
-
-(defcommand pending-migrations []
-  (lm/pending-migrations db-spec sname))
-
-(defn actualized?
-  "checks if there are no pending migrations"
+(defn create-users-table
   []
-  (empty? (pending-migrations)))
+  (sql/with-connection db-spec
+    (sql/create-table
+      :users
+      [:id "bigint auto_increment PRIMARY KEY"]
+      [:first_name "varchar(30)"]
+      [:last_name "varchar(30)"]
+      [:email "varchar(30)"]
+      [:admin :boolean]
+      [:last_login :time]
+      [:is_active :boolean]
+      [:pass "varchar(100)"])))
 
-(def actualize migrate)
+(defn create-todos-table
+  []
+  (sql/with-connection db-spec
+     (sql/create-table
+       :todos
+       [:id "bigint auto_increment PRIMARY KEY"]
+       [:title "varchar(30)"]
+       [:details "varchar(100)"]
+       [:created_at :time]
+       [:updated_at :time]
+       [:completed_at :time])))
+
+(defn create-tables
+  "creates the database tables used by the application"
+  []
+  (create-todos-table))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

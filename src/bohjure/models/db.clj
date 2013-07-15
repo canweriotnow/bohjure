@@ -6,13 +6,11 @@
 
 (defdb db schema/db-spec)
 
-(defentity todos)
-
 (defentity users)
 
-(defn create-todo [todo]
-  (insert todos
-          (values todo)))
+(defn create-user [user]
+  (insert users
+          (values user)))
 
 (defn update-user [id first-name last-name email]
   (update users
@@ -25,3 +23,17 @@
   (first (select users
                  (where {:id id})
                  (limit 1))))
+
+(defentity todos
+  (prepare (fn [todo]
+             (assoc todo :updated_at (bohjure.util/current-timestamp)))))
+
+(defn create-todo [todo]
+  (insert todos
+          (values (assoc todo :created_at (bohjure.util/current-timestamp)))))
+
+(defn complete-todo [id]
+  (update todos
+          (set-fields {:completed_at (bohjure.util/current-timestamp)})
+          (where {:id id})))
+

@@ -18,7 +18,6 @@
    [cljs-ajax "0.1.4"]
    [com.h2database/h2 "1.3.172"]
    [korma "0.3.0-RC5"]
-   [lobos "1.0.0-beta1"]
    [log4j
     "1.2.17"
     :exclusions
