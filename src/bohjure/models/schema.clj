@@ -38,9 +38,9 @@
        [:id "bigint auto_increment PRIMARY KEY"]
        [:title "varchar(30)"]
        [:details "varchar(100)"]
-       [:created_at :time]
-       [:updated_at :time]
-       [:completed_at :time])))
+       [:created_at "timestamp default current_timestamp() not null"]
+       [:updated_at "timestamp default current_timestamp not null"]
+       [:completed_at "timestamp"])))
 
 (defn create-tables
   "creates the database tables used by the application"
