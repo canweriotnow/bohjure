@@ -7,6 +7,7 @@
    [compojure "1.1.5"]
    [ring-server "0.2.8"]
    [clabango "0.5"]
+   [hiccup "1.0.3"]
    [com.taoensso/timbre "2.1.2"]
    [com.postspectacular/rotor "0.1.0"]
    [com.taoensso/tower "1.7.1"]
@@ -17,6 +18,7 @@
    [cljs-ajax "0.1.4"]
    [com.h2database/h2 "1.3.172"]
    [korma "0.3.0-RC5"]
+   [lobos "1.0.0-beta1"]
    [log4j
     "1.2.17"
     :exclusions
@@ -42,9 +44,9 @@
    :dev
    {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.1.8"]]}}
   :url
-  "http://example.com/FIXME"
+  "https://github.com/canweriotnow/bohjure"
   :plugins
   [[lein-ring "0.8.5"] [lein-cljsbuild "0.3.2"]]
   :description
-  "FIXME: write description"
+  "Example Luminus app for BohConf 2013"
   :min-lein-version "2.0.0")
