@@ -37,3 +37,6 @@
           (set-fields {:completed_at (bohjure.util/current-timestamp)})
           (where {:id id})))
 
+
+
+
