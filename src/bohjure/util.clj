@@ -1,4 +1,6 @@
 (ns bohjure.util
+  (:import (java.util Date)
+           (java.sql Timestamp))
   (:require [noir.io :as io]
             [markdown.core :as md]))
 
@@ -9,9 +11,14 @@
   ([time fmt]
     (.format (new java.text.SimpleDateFormat fmt) time)))
 
+(defn current-timestamp []
+  (Timestamp. (.getTime (Date.))))
+
 (defn md->html
   "reads a markdown file from public/md and returns an HTML string"
   [filename]
   (->>
     (io/slurp-resource filename)
     (md/md-to-html-string)))
+
+

@@ -1,15 +1,18 @@
 (ns bohjure.models.db
   (:use korma.core
         [korma.db :only (defdb)])
-  (:require [bohjure.models.schema :as schema]))
+  (:require [bohjure.models.schema :as schema]
+            [bohjure.util :only (current-timestamp format-time)]))
 
 (defdb db schema/db-spec)
 
+(defentity todos)
+
 (defentity users)
 
-(defn create-user [user]
-  (insert users
-          (values user)))
+(defn create-todo [todo]
+  (insert todos
+          (values todo)))
 
 (defn update-user [id first-name last-name email]
   (update users

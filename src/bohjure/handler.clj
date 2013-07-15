@@ -5,7 +5,8 @@
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
             [com.postspectacular.rotor :as rotor]
-            [bohjure.routes.cljsexample :refer [cljs-routes]]))
+            [bohjure.routes.cljsexample :refer [cljs-routes]]
+            [bohjure.models.schema :as schema]))
 
 (defroutes
   app-routes
@@ -20,6 +21,8 @@
    an app server such as Tomcat
    put any initialization code here"
   []
+  (if-not (schema/actualized?)
+    (schema/actualize))
   (timbre/set-config!
     [:appenders :rotor]
     {:min-level :info,

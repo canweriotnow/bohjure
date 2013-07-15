@@ -6,10 +6,10 @@
 (defmigration add-todos-table
   (up [] (create
           (table :todos
-                 (int :id :primary-key)
+                 (bigint :id :primary-key)
                  (varchar :title 30)
                  (varchar :details 255)
                  (boolean :complete)
                  (time :created_at)
-                 (time :compelted_at))))
+                 (time :completed_at))))
   (down [] (drop (table :todos))))
