@@ -18,6 +18,18 @@ If you intend to use this name ironically, please set the
 LEIN_IRONIC_JURE environment variable and try again.
 ```
 
+Next, you'll probably want to install [LightTable](http://www.lighttable.com/).
+
+Binaries for just about any platform are available at that link. Of course, you can use vim, emacs, or your editor of choice, but I'll be demoing with LightTable since it's awesome.
+
+Clone this repo, and we'll get started!
+
+## Some info
+
+This is basically a bare [Luminus](http://www.luminusweb.net/) web application with a few modifications. But I wanted to keep it simple.
+
+The command used to create bohjure was `lein new luminus bohjure +cljs +bootstrap +h2`, if you want to bootstrap your own app. More details are at http://www.luminusweb.net
+
 
 ## Prerequisites
 
