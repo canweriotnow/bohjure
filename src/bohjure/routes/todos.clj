@@ -3,12 +3,6 @@
             [noir.response :as response]
             [bohjure.views.layout :as layout]))
 
-(def messages
-  (atom
-    [{:message "Hello world"
-      :user    "Foo"}
-     {:message "Ajax is fun"
-      :user    "Bar"}]))
 
 (defroutes todos-routes
   (GET "/todolist" [] (layout/render "todolist.html"))
