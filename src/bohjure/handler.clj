@@ -32,13 +32,17 @@
   (timbre/set-config!
     [:shared-appender-config :rotor]
     {:path "bohjure.log", :max-size (* 512 1024), :backlog 10})
-  (timbre/info "bohjure started successfully"))
+  (timbre/info "bohjure started successfully")
+
+  (future (loop []
+            (Thread/sleep 10000)
+            (db/add-message-list @messages)
+            (recur))))
 
 (defn destroy
   "destroy will be called when your application
    shuts down, put any clean up code here"
   []
-  (db/add-message-list @messages)
   (timbre/info "bohjure is shutting down..."))
 
 (def app

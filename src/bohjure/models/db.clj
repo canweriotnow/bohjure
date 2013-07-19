@@ -50,13 +50,15 @@
           (values message)))
 
 (defn add-message-list [message-list]
-  (for [msg message-list]
-    (cond (nil? (:id msg))
+
+  (doseq [msg message-list :when (nil? (:id msg))]
                  (insert messages
-                    (values msg)))))
+                    (values msg))))
 
 
+(add-message-list [{:user "Hubba" :message "Spam"}])
 (get-messages)
+
 
 
 
