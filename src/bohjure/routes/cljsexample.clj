@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [noir.response :as response]
             [bohjure.views.layout :as layout]
-            [bohjure.models.db :as db]))
+            [bohjure.models.db :as db]
+            [bohjure.models.schema :as schema]))
 
 (def validate-messages
   (partial every? #(and (:user %) (:message %))))
@@ -16,7 +17,18 @@
 
 (def messages
   (ref
-   (db/get-messages)))
+    (db/get-messages)))
+
+(defn add-message
+  [message user]
+  (dosync
+            (let [messages (commute messages conj {:message message :user user})
+                  db-agent (agent nil)]
+              (send-off db-agent (fn [_]
+                                   (do
+                                     (db/add-message-list @messages))
+                                   nil))
+              messages)))
 
 
 
@@ -25,31 +37,8 @@
   (GET "/messages" [] (response/edn @messages))
   (POST "/add-message" [message user]
         (response/edn
-          (dosync
-            (let [messages (commute messages conj {:message message :user user})
-                  db-agent (agent nil)]
-              (send-off db-agent (fn []
-                                   (do
-                                     (db/add-message-list @messages)
-                                     (println "Agent is done!"))
-                                   nil))
-              messages)))))
-
-(dosync
-            (let [messages (commute messages conj {:message "smack" :user "fuzzy"})
-                  db-agent (agent 0)]
-              (send-off db-agent (fn []
-                                    (do
-                                   (db/add-message-list @messages)
-                                    (println "Agent is done!"))
-                                   )
-              messages)))
+          (add-message message user))))
 
 
-;(restart-agent new-agent nil)
-;(dosync (commute messages conj {:message "Wowza!" :user "Soop"}))
 
-;(db/add-message-list @messages)
-
-(db/get-messages)
 

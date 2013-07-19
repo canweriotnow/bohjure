@@ -56,9 +56,6 @@
                     (values msg))))
 
 
-(add-message-list [{:user "Hubba" :message "Spam"}])
-(get-messages)
-
 
 
 

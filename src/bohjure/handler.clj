@@ -20,7 +20,7 @@
    an app server such as Tomcat
    put any initialization code here"
   []
-  (if-not schema/initialized?
+  (if-not (schema/initialized?)
     (schema/create-tables))
   (timbre/set-config!
     [:appenders :rotor]
@@ -32,12 +32,7 @@
   (timbre/set-config!
     [:shared-appender-config :rotor]
     {:path "bohjure.log", :max-size (* 512 1024), :backlog 10})
-  (timbre/info "bohjure started successfully")
-
-  (future (loop []
-            (Thread/sleep 10000)
-            (db/add-message-list @messages)
-            (recur))))
+  (timbre/info "bohjure started successfully"))
 
 (defn destroy
   "destroy will be called when your application
