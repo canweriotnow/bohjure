@@ -5,8 +5,9 @@
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
             [com.postspectacular.rotor :as rotor]
-            [bohjure.routes.cljsexample :refer [cljs-routes]]
-            [bohjure.models.schema :as schema]))
+            [bohjure.routes.cljsexample :refer [cljs-routes messages]]
+            [bohjure.models.schema :as schema]
+            [bohjure.models.db :as db]))
 
 (defroutes
   app-routes
@@ -19,6 +20,8 @@
    an app server such as Tomcat
    put any initialization code here"
   []
+  (if-not schema/initialized?
+    (schema/create-tables))
   (timbre/set-config!
     [:appenders :rotor]
     {:min-level :info,
@@ -35,6 +38,7 @@
   "destroy will be called when your application
    shuts down, put any clean up code here"
   []
+  (db/add-message-list @messages)
   (timbre/info "bohjure is shutting down..."))
 
 (def app
@@ -46,4 +50,5 @@
    []))
 
 (def war-handler (middleware/war-handler app))
+
 

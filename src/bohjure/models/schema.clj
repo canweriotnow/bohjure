@@ -42,11 +42,29 @@
        [:updated_at "timestamp default current_timestamp not null"]
        [:completed_at "timestamp"])))
 
+(defn create-messages-table
+  []
+  (sql/with-connection db-spec
+     (sql/create-table
+      :messages
+      [:id "bigint auto_increment primary key"]
+      [:message "varchar(120)"]
+      [:user "varchar(30)"])))
+
+(defn drop-messages-table
+  []
+  (sql/with-connection db-spec
+                       (sql/drop-table :messages)))
+
 (defn create-tables
   "creates the database tables used by the application"
   []
-  (create-todos-table))
+  (create-messages-table))
 
+(defn drop-tables
+  "Drop ALL the tables!"
+  []
+  (drop-messages-table))
 
 
 

@@ -8,6 +8,8 @@
 
 (defentity users)
 
+
+
 (defn create-user [user]
   (insert users
           (values user)))
@@ -36,6 +38,25 @@
   (update todos
           (set-fields {:completed_at (bohjure.util/current-timestamp)})
           (where {:id id})))
+
+(defentity messages)
+
+(defn get-messages
+  []
+  (select messages))
+
+(defn add-message [message]
+  (insert messages
+          (values message)))
+
+(defn add-message-list [message-list]
+  (for [msg message-list]
+    (cond (nil? (:id msg))
+                 (insert messages
+                    (values msg)))))
+
+
+(get-messages)
 
 
 
